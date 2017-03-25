@@ -1,0 +1,22 @@
+TA-1 Name:- Jai Asher
+TA-2 Name:- Abhay Kasturia
+
+Design Grade for q1:- AB
+
+Correctness Score for q1:- 13/15
+
+TA Comments on Design for q1:-
+1. Class diagram should have association arrows from MetaToy to Toy as MetaToy contains List of Toys
+2. Implementation of the time field could have been only declared in the particular toy which requires a timer
+3. Ensure proper indentation
+4. provide invariants where a field is dependent on another field (eg: selected? and fill)
+5. avoid magic constants
+6. ensure meta for al the functions
+
+Student1 CCIS ID:- chandrika2311
+Presentation Grade:- A
+TA Comments on Presentation:-
+
+Student2 CCIS ID:- rachanatondare
+Presentation Grade:- A
+TA Comments on Presentation:-

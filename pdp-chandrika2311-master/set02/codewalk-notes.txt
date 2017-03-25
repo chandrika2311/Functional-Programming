@@ -1,0 +1,29 @@
+TA-1 Name:- Jai Asher
+TA-2 Name:- Parth Bansal
+
+Design Grade:- AB
+Correctness Score:- 9/15
+TA Comments on Design:-
+1. Missing 100% code coverage. 
+2. Wrong machineInput-fn contract in the template.
+3. Capitalize data definitions. (State and not state).
+4. Wrong return statement for accepting-state? It actually returns a String and not a Boolean.
+5. Wrong strategy for next-state function.
+6. Please use helper functions to modularize your code for next-state function.
+7. Indent your data definition observer template correctly.
+8. Wrong contract for Probe data definition. (should be (make-probe Integer Integer Direction))
+9. Wrong strategy for probe-forward-possible-outcome? function.
+10. Please do not use _ in your function names. Use - instead.
+11. Should have a WHERE clause in move-north? function.
+12. Try and reuse pieces of code which you have already.
+13. Code can be simplified and refactored to a great extent.
+
+Student1 CCIS ID:- chandrika2311
+Presentation Grade:- AB
+TA Comments on Presentation:-
+1. We had to probe a lot to get the correct answer. 
+2. Please read the slides again to have your strategies correct. 
+
+Student2 CCIS ID:-
+Presentation Grade:-
+TA Comments on Presentation:-

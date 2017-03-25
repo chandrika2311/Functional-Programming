@@ -1,0 +1,86 @@
+#lang racket
+
+(require rackunit)
+(require 2htdp/image)
+(require 2htdp/universe)
+(require "extras.rkt")
+(require "XYController.rkt")
+(require "PositionController.rkt")
+(require "XController.rkt")
+(require "Interfaces.rkt")
+(require "YController.rkt")
+(require "WidgetWorks.rkt")
+(require "VelocityController.rkt")
+(require "Model.rkt")
+
+(provide ControllerOutlet%)
+
+
+(define ControllerOutlet%
+  (class* object% (SWidget<%>)
+    
+    ; the model to which the controllers will be connected
+    (init-field m) ; Model<%>
+    
+    ; the conatiner in which the controllers will live    
+    (init-field c) ; Container<%>
+
+
+
+    (super-new)
+
+    ;; add-details-viewer
+    ;; GIVEN: A controller class that is subclass of ControllerContainer<%>
+    ;; EFFECT: Adds a controller object to the current container canvas
+    ;; EXAMPLES: (send add-controller XController%)-> Adds the x controller to
+    ;;               ListOfWidgets in the Conatiner Canvas
+    (define/public (add-details-viewer cont)
+      (send c add-widget (new cont [model m])))
+
+    ;; after-key-event: KeyEvent -> Void
+    ;; GIVEN: A KeyEvent
+    ;; EFFECT: Adds the respective controller type to the World
+    ;; EXAMPLES: (send after-key-event "v")
+    ;;           -> adds a new Velocity Controller to the World
+    ;; STRATEGY: Cases on KeyEvents kev
+    (define/public (after-key-event ke)
+      (cond
+        [(key=? ke "p") (add-details-viewer PositionController%)]
+        [(key=? ke "v") (add-details-viewer VelocityController%)]
+        [(key=? ke "x") (add-details-viewer XController%)]
+        [(key=? ke "y") (add-details-viewer YController%)]
+        [(key=? ke "z") (add-details-viewer XYController%)]))
+
+        ;; add-to-scene: Scene -> Scene
+    ;; GIVEN: A scene
+    ;; RETURNS: The given scene is returned
+    ;; EXAMPLES: (send add-to-scene (empty-scene 400 500)) -> (empty-scene 400 500)
+    (define/public (add-to-scene scene) scene)
+
+    ;; after-tick: -> void
+    ;; GIVEN: no arguments
+    ;; EFFECT: no change in ControllerFactory after tick
+    (define/public (after-tick) 'no-change-in-controller-factory-tick)
+
+    ;; after-button-down: Integer Integer -> Void
+    ;; GIVEN: a location
+    ;; EFFECT: no change in controller factory on button down
+    (define/public (after-button-down mx my)
+      'no-change-in-controller-factory-button-down)
+
+    ;; after-drag: Integer Integer -> Void
+    ;; GIVEN: a location
+    ;; EFFECT: no change in controller factory after drag
+    (define/public (after-drag mx my)
+      'no-change-in-controller-factory-drag)
+
+    ;; after-button-up: Integer Integer -> Void
+    ;; GIVEN: a location
+    ;; EFFECT: no change in controller factory after button up
+    (define/public (after-button-up mx my)
+      'no-change-in-controller-factory-button-up)
+
+      (define/public (after-move mx my)
+      'no-change-in-controller-factory-button-up)))
+
+    

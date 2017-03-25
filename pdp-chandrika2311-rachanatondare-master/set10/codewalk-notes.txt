@@ -1,0 +1,30 @@
+TA-1 Name:- Ramasubramanian C (rama2312)
+TA-2 Name:- Shailesh Pujari (shail174)
+
+Design Grade for q1:- AB
+Design Grade for q2:- A
+
+Correctness Score for q1:- 13/15
+Correctness Score for q2:- 15/15
+
+TA Comments on Design for q1:-
+- Constructor template for Metatoy is missing container
+- no need of container in MetaToy class
+- constructor template for Clock should have data types instead of x,y
+- after-key-event for all classes should return Void
+- missing fields in Constructor template for Throbber
+- missing return for new-y and calculate-hypo
+
+TA Comments on Design for q2:-
+- why need of container in MetaToy class - Not Required
+- no need for drag field
+- Contract for all functions should be Class instead of Class<%> (seen in both q1 and q2)
+
+Student1 CCIS ID:- chandrika2311
+Presentation Grade:- A
+TA Comments on Presentation:-
+- Able to explain the add-teammtes functionality
+Student2 CCIS ID:- rachanatondare
+Presentation Grade:- A
+TA Comments on Presentation:-
+- Understood as to how the key and mouse events are passed to SBlock

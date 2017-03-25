@@ -1,0 +1,38 @@
+TA-1 Name:- Amit K
+TA-2 Name:- Sarita
+
+Design Grade for q1:-B
+Design Grade for q2:-AB
+Correctness Score for q1:- 7/15
+Correctness Score for q2:-14/15
+
+TA Comments on Design for q1:-
+100% test coverage not achieved
+Missing data definitions, missing observer templates. At this point in the course, we expect Data definition to be all good!
+Bug in the code! (Handling varexp, multiple rules as per PS 07 q1)
+Function name choice should be more appropriate. Even strategy should make sense.
+Should have Good Purpose statements! (Observed across multiple functions)
+make-indent-sapces-func, wrong purpose statement! Inconsistency in usage.
+Assumptions should be documented!
+print-rest-args function is wrong! (Not at all expected!)
+
+Suggestion:
+80 column width (Spacing of the code)
+
+TA Comments on Design for q2:-
+Mistake in constructor template
+Should have Good Purpose statements!
+Avoid magic numbers!
+Should have correct examples. Bug in the code, probe moves backward
+
+
+Suggestion:
+“on” should be “of”
+
+Student1 CCIS ID:- chandrika2311
+Presentation Grade:-A
+TA Comments on Presentation:-
+
+Student2 CCIS ID:-jamesgenew
+Presentation Grade:-AB
+TA Comments on Presentation:-  Should answer and should be thorough about the logic!

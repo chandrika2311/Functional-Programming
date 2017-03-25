@@ -1,0 +1,22 @@
+TA-1 Name:- Vinay
+TA-2 Name:- Abhay
+
+Design Grade:- AB
+Correctness Score:- 12/15
+TA Comments on Design:- 
+- use constants
+- Data Definition missing for Teacher(several contracts wrong because of that)
+- contract should contain the data type of the input parameters
+- strategy should be call a more genral function insted of use template for lst
+- use the code which you have written (felliesen-roster instead of get-felliesen) 
+- redudant code (eg: get-felliesen)
+- code could have been simplified with correct use of HOF ( for compare-list? and compare-deeper-lists?)
+- avoid newlines for closing brackets
+
+Student1 CCIS ID:- chandrika2311
+Presentation Grade:- AB
+TA Comments on Presentation:-
+
+Student2 CCIS ID:-
+Presentation Grade:-
+TA Comments on Presentation:-

@@ -1,0 +1,72 @@
+#lang racket
+
+;; GOAL:  To design and use stateful classes and implement pulling and pushing
+;;       of information
+
+(require rackunit)
+(require "extras.rkt")
+(require "interfaces2.rkt")
+(require "Sblock.rkt")
+(require "Metatoy.rkt")
+(require "WidgetWorks.rkt")
+(require 2htdp/universe)   
+(require 2htdp/image)
+
+(provide
+ make-block
+ Metatoy<%>
+ cubelets-init
+ SBlock<%>
+ )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;CONSTANTS;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define CANVAS-WIDTH 600)
+(define CANVAS-HEIGHT 500)
+(define EMPTY-CANVAS (empty-scene CANVAS-WIDTH CANVAS-HEIGHT))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;DATA DEFINITIONS;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LISTOFSBLOCKS<%>
+;;
+;; A ListOfSBlocks<%> (lob) is either
+;; ---- empty
+;; ---- (cons SBlock<%> lob)
+;;
+;; INTERPRETATION
+;;
+;; A ListOfSBlocks<%> is either empty list or it is a list of SBLock<%> 
+;;
+;; TEMPLATE
+;; lob-fn : ListOfSBlocks<%> -> ???
+;; (define (lob-fn lob)
+;;    (cond
+;;     [(empty? lob) ...]
+;;     [else (... (SBlock<%>-fn (first lob))
+;;           (lob-fn (rest lob)))]))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; run : PosReal -> Metatoy
+;; GIVEN: a frame rate, in secs/tick
+;; EFFECT: runs this Metatoy with no SBlocks in it at the given frame rate
+;; RETURNS: the Metatoy in its final state
+;; STRATEGY: Create a Metatoy object, and call its run method
+(define (run rate)
+  (local ((define new-container (cubelets-init))
+          (define the-metatoy (new Metatoy%
+                                   [container new-container]
+                                   [x (/ CANVAS-WIDTH 2)]
+                                   [y (/ CANVAS-HEIGHT 2)])))
+    (begin
+      (send new-container add-stateful-widget the-metatoy)
+      (send new-container run rate))))
+
+;; cubelets-init : -> Container
+;; GIVEN: no arguments
+;; RETURNS: a Container, initially with no blocks, which when run, will
+;; run in a 600x500 canvas and process the events in the description above.
+(define (cubelets-init)
+  (container-init CANVAS-WIDTH CANVAS-HEIGHT))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define CUBELET (cubelets-init))

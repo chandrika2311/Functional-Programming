@@ -1,0 +1,22 @@
+TA-1 Name:- Sumit
+TA-2 Name:- Harshil
+
+Design Grade for q1:- A
+Correctness Score for q1:- 15/15
+- Simulation runs as expected
+
+TA Comments on Design for q1:-
+- Could have used inheritance for the X,Y and XY controllers, so XY as the base class and X,Y the children. 
+
+Student1 CCIS ID:- chandrika2311
+Presentation Grade:- A
+TA Comments on Presentation:-
+- Asked about modifications required to avoid common code, satisfactory answer
+- Asked about the changes required to avoid functions that do not do anything in certain classes, satisfactory answer
+
+Student2 CCIS ID:- rachanatondare
+Presentation Grade:- A
+TA Comments on Presentation:-
+- Explain the run function, satisfactory answer
+- Explain the MVC architecture in relation to your program, satisfactory answer
+- Explain inheritance used with respect to your program, satisfactory answer

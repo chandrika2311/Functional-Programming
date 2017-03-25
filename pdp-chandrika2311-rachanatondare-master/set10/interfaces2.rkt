@@ -1,0 +1,67 @@
+#lang racket
+
+(require "WidgetWorks.rkt")
+
+(provide SBlock<%>
+         Metatoy<%>)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;; INTERFACES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; A Sblock is an object of any class that implements Sblock<%> 
+
+(define SBlock<%>
+  (interface (SWidget<%>) ;; this will include all the methods in SWidget<%>
+
+    ;; -> ListOfBlock<%>
+    ;; GIVEN: No arguments
+    ;; RETURNS:all the teammates of the sblock
+    get-team
+
+    ;; SBlock -> void
+    ;; GIVEN: a sblock
+    ;; EFFECTS: adds the given sblock to this block's team
+    add-teammate
+
+    ;; -> Integer
+    ;; RETURNS: the x and y co-ordinates of the given sblock
+    sblock-x
+    sblock-y
+
+    ;; Boolean-> Void
+    ;; GIVEN: a boolean value
+    ;; EFFECTS: helps the sblock recognize all the sblocks that exist in the
+    ;;          world
+    recognize-sblock
+
+    ;;ListOfBlocks<%> -> Void
+    ;; GIVEN: list of all the blocks in a team
+    ;; EFFECTS: helps the sblock recognize all the sblocks that exist in the
+    ;;          in its team
+    recognize-team
+
+    ;;Boolean-> Void
+    ;;GIVEN: a boolean value
+    ;;EFFECTS: helps the sblock to identify if it should be dragged or not
+    update-drag
+
+    ;; Integer->Void
+    ;; GIVEN: An intger
+    ;; RETRUNS: updates the relatve positon of the block with respect to the
+    ;;         mouse pointer coordinates and its center current coordinates
+    update-mx
+    update-my
+    ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; A Metatoy is an object of any class that implements Metatoy<%>.
+
+(define Metatoy<%>
+  (interface (SWidget<%>) ;; this will include all the methods in SWidget<%>
+    
+    ;; -> ListOfToy
+    get-toys
+))
+
+
+;;

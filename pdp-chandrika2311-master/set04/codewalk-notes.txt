@@ -1,0 +1,34 @@
+TA-1 Name:- Kovit	
+TA-2 Name:- Sarita
+
+Design Grade:- AB
+Correctness Score:- 14
+TA Comments on Design:-
+
+
+screensaver-3
+Functionality checked! Working fine
+
+class-list
+Incomplete data definition for list of slips
+Mistake in the  constructor template for slip
+Missing halting measure. (deliverable missing)
+Use constants!
+Lot of code duplication! Design should be generalized! Duplicate checks while handling functionality 
+Error messages must!
+Purpose statements should be meaningful and clear. You are doing it in a wrong way! Eg: fn calling-comparison-list?
+Mistake in the contract for few functions. Mistakes in the design strategy (wrong variable reference)
+
+Suggestion: Follow 80 character limit
+Follow proper  naming convention/ suitable names 
+Code should be properly indented
+Function names should be appropriate
+Avoid dangling brackets
+
+
+
+Student1 CCIS ID:-
+Presentation Grade:- A
+TA Comments on Presentation:- God! Could explain
+
+

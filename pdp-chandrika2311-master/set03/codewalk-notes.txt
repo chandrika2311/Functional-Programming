@@ -1,0 +1,14 @@
+TA-1 Name:- Revanth
+TA-2 Name:- Manasa
+
+Design Grade:- B
+Correctness Score:- 12/15
+TA Comments on Design:-
+1. Lot of missing tests - Learn how to write tests for mouse events, key events
+2. Follow coding conventions for data types, function names
+3. Missing function design for a whole function calculate-new-circle-dimensions
+4. Way too big of a function - Modularize it
+5. Missing examples in some functions - maintain consistency
+6. -3 for providing deliverables world-circ1, world-circ2 and world-paused?. Also the language was set to BSL and not ISL. Please make a note of this for future problem sets. (Parth Bansal)
+
+Presentation Grade:- AB

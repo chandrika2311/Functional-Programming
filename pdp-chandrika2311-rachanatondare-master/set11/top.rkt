@@ -1,0 +1,41 @@
+#lang racket
+
+;; GOAL:The goal of this problem set is to implement inheritance
+;;     and the model-viewer-controller architecture.
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require rackunit)
+(require "extras.rkt")
+(require "WidgetWorks.rkt")
+(require "Interfaces.rkt")
+(require "Model.rkt")
+(require "World.rkt")
+(require "ControllerOutlet.rkt")
+
+
+(provide run )
+
+;;(check-location "set11" "top.rkt")
+;; CONSTANTS
+(define CANVAS-WIDTH 600)
+(define CANVAS-HEIGHT 500)
+
+;; run : PosReal -> Void
+;; GIVEN: a frame rate, in sec/tick
+;; EFFECT: Creates and runs the MVC simulation with the given frame rate.
+;; EXAMPLES: (run 0.25) -> Creates and runs the MVC simulation with
+;;           the given frame rate of 0.25
+;; STRATEGY: Combine simpler functions
+
+(define (run rate)
+  (local
+    ((define m (new Model%))
+     (define c (container-init CANVAS-WIDTH CANVAS-HEIGHT))
+     (define w (new World% [model m])))
+    (begin
+      (send w add-widget
+        (new ControllerOutlet% [w w][m m]))
+      (send c add-stateful-widget w)
+      (send c run rate))))
+

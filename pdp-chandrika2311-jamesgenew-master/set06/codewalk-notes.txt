@@ -1,0 +1,21 @@
+TA-1 Name:- Sumit
+TA-2 Name:- Amit N
+
+Design Grade:- AB
+Correctness Score:- 15/15
+TA Comments on Design:-
+- key events are not being passed to the children. 
+	When grandchildren and root node is selected and C is pressed, there is only one children created.
+	
+- interp should include initial values on ListOfX
+- remove-trees-from-t-fn should have used HOFs
+
+Student1 CCIS ID:- chandrika2311
+Presentation Grade:- A
+TA Comments on Presentation:-
+
+Student2 CCIS ID:- jamesgenew
+Presentation Grade:- B
+TA Comments on Presentation:-
+- should know every function even if its not written by you
+- Go through class material thoroughly and understand HOF concepts clearly

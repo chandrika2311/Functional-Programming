@@ -1,0 +1,253 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname q1) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(require rackunit)
+(require "extras.rkt")
+
+(define INDENT 4)
+
+;; A Program is a ListOfDefinition.
+
+(define-struct def (name args body))
+;; A Definition is a (make-def Variable ListOfVariable Exp)
+;; INTERPRETATION:
+;; name is the name of the function being defined
+;; args is the list of arguments of the function
+;; body is the body of the function.
+
+(define-struct varexp (name))
+(define-struct appexp (fn args))
+(define sample-program
+  (list
+   (make-def 'a-very-long-function-name
+             (list 'x)
+             (make-appexp 'f1 (list (make-varexp 'x))))
+   (make-def 'f2 (list 'x 'a-very-long-variable-name 'y)
+             (make-appexp 'f1 (list (make-varexp 'y))))
+   (make-def 'f3 (list 'x 'z 't 'u)
+             (make-appexp
+              'f1
+              (list (make-appexp
+                     'f2 (list (make-varexp 'z)
+                               (make-varexp 'y)))
+                    (make-varexp 'z)
+                    (make-appexp
+                     'f1 (list (make-appexp
+                                'f2 (list (make-varexp 'z)
+                                          (make-varexp 'y)))
+                               (make-varexp 'z))))))))
+;; An Exp is one of
+;; -- (make-varexp Variable)
+;; -- (make-appexp Variable ListOfExp)
+;; INTERPRETATION;
+;; (make-varexp v)                   represents a use of the variable v
+;; (make-appexp f (list e1 ... en))  represents a call to the function
+;;                                   named f, with arguments e1,..,en
+
+;; A Variable is a Symbol.
+
+;; program-to-strings : Program PosInt -> ListOfString
+;; GIVEN: GarterSnake program and a width
+;; RETURNS: A representation of the program as a sequence of lines following the
+;;          assigned formatting rules
+(define (program-to-strings p width)
+  (cond
+    [(empty? p) empty]
+    [else (generate-lines p width)]
+    )
+  )
+(begin-for-test (check-equal?
+                 (program-to-strings (list
+                                      (make-def 'a-very-long-function-name
+                                                (list 'x 'y) empty)
+                                      (make-def 'a-very-long-function-name1
+                                                (list 'x1 'y1) empty)
+                                      (make-def 'a-very-long-function-name2
+                                                (list 'x2 'y2) empty)
+                                      (make-def 'a-v(list 'x 'y) empty)) 20)
+                 (list"def a-very-long-function-name (x,"
+                      "                               y) :"
+                      "def a-very-long-function-name1 (x1,"
+                      "                                y1) :"
+                      "def a-very-long-function-name2 (x2,"
+                      "                                y2) :"
+                      "def a-v (x,y) :"))
+                (check-equal?(program-to-strings empty 20) empty))
+;__________________________________________________________________________________
+;; generate-lines : Program PosInt -> ListOfString
+;; GIVEN: A Gartersnake program and a width
+;; RETURNS: A ListOfString representing a properly formatted version of the program
+;; HALTING CONDITION: p is empty
+(define (generate-lines p width)
+  (cond
+    [(empty? p) empty]
+    [else (append(generate-def (first p) width) (generate-lines (rest p) width))]
+    ;generate-def handles creating the string for each individual definition, cons these together
+    )
+  )
+
+(begin-for-test (check-equal?
+                 (generate-lines (list
+                                      (make-def 'a-very-long-function-name
+                                                (list 'x 'y) empty)
+                                      (make-def 'a-very-long-function-name1
+                                                (list 'x1 'y1) empty)
+                                      (make-def 'a-very-long-function-name2
+                                                (list 'x2 'y2) empty)
+                                      (make-def 'a-v(list 'x 'y) empty)) 20)
+                 (list"def a-very-long-function-name (x,"
+                      "                               y) :"
+                      "def a-very-long-function-name1 (x1,"
+                      "                                y1) :"
+                      "def a-very-long-function-name2 (x2,"
+                      "                                y2) :"
+                      "def a-v (x,y) :")))
+
+;__________________________________________________________________________________
+;; generate-def : Definition PosInt -> String
+;; GIVEN: A definition and a posint representing width
+;; RETURNS: A string which represents a properly formatted version of the given definition
+(define (generate-def def width)
+(generate-func def width)
+  ;(generate-body def width))
+  )
+ 
+(begin-for-test(check-equal?(generate-def(make-def 'a-very-long-function-name
+                                                (list 'x 'y) empty)20)
+                          (list "def a-very-long-function-name (x,"
+                                  "                               y) :"))
+               (check-equal?(generate-def(make-def 'a-v(list 'x 'y) empty)20)
+                          (list "def a-v (x,y) :")))
+
+;__________________________________________________________________________________
+;; generate-func : Definition PosInt -> String or List of String
+;; GIVEN: A definition and a PosInt representing width
+;; RETURNS: Case: when the string length of definition is within with width
+;;                , A String representing the function name and arguments part of
+;;                  the given definition formatted properly in one line
+;;          Case2: when the string length of definition is not within with width
+;;                , A String representing the function name and arguments part of
+;;                  the given definition formatted properly in multiple lines hence returning a
+;;                  list of strings
+(define (generate-func def width)
+  (cond
+    [(<= (string-length (first (func-possibility-1 def))) width) (func-possibility-1 def)]
+    ;;if function name & args can fit on one line without violating width, use this clause
+    [else (func-possibility-2 def width)]  ;;else clause for case where function name & args cannot
+    ;fit within given width
+    )
+  )
+;________Tests
+(begin-for-test(check-equal?(generate-func(make-def 'a-v(list 'x 'y) empty)20)
+                           (list "def a-v (x,y) :"))
+               (check-equal?(generate-func(make-def 'a-very-long-function-name(list 'x 'y) empty)20)
+                            (list "def a-very-long-function-name (x,"
+                                  "                               y) :")))
+
+;__________________________________________________________________________________
+;; func-possibility-1 : Definition -> String
+;; GIVEN: A definition
+;; RETURNS: A string representing the first possibility for a function name
+;;          and arguments, where they can all fit onto a single line
+(define (func-possibility-1 d)
+  (cons(string-append "def " (symbol->string (def-name d)) " (" (arg-list-1 (def-args d))) empty)
+  )
+;________Tests
+(begin-for-test(check-equal?
+                (func-possibility-1(make-def 'f1 (list 'a 'b 'c 'd)
+                                             (make-appexp 'f2 (list (make-varexp 'z)))))
+                (list "def f1 (a,b,c,d) :")))
+
+;__________________________________________________________________________________
+;; arg-list-1 : ListOfVariable -> String
+;; GIVEN: A listofvariable
+;; RETURNS: A string representing a list of arguments, to be used with
+;;          the "func-possibility-1" function
+;; HALTING CONDITION: given listofvariable is empty
+(define (arg-list-1 lov)
+  (cond
+    [(empty? lov) ") :"]
+    [(empty? (rest lov)) (string-append (symbol->string (first lov)) (arg-list-1 (rest lov)))]
+    [else (string-append (symbol->string (first lov)) "," (arg-list-1 (rest lov)))]
+    )
+  )
+
+(define sample-def-1 (make-def 'f1 (list 'a 'b 'c 'd) (make-appexp 'f2 (list (make-varexp 'z)))))
+;________Tests
+(begin-for-test (check-equal? (func-possibility-1 sample-def-1) (list "def f1 (a,b,c,d) :")))
+
+;__________________________________________________________________________________
+
+;; func-possibility-2 : Definition PosInt -> ListOfString
+;; GIVEN: A definition and a posint representing width
+;; RETURNS: A listofstring representation of the given definition's function name & arguments
+;;;;;may need to add possibility where it doesn't fit in width, but has only 1 arg
+(define (func-possibility-2 d width)
+;;;; and possibility where it does not fit but has 0 args
+  (cons (string-append "def " (symbol->string (def-name d))
+                       " (" (symbol->string (first (def-args d))) ",")
+        (arg-list-2 (rest (def-args d))
+                    (string-length (string-append "def "
+                                                  (symbol->string (def-name d)) "(")))) 
+  )
+;________Tests
+(define sample-def-11 (make-def 'hello (list 'a 'b 'c 'd)
+                               (make-appexp 'f2 (list (make-varexp 'z)))))
+(begin-for-test (check-equal?
+                 (func-possibility-2 sample-def-11 10)
+                 (list "def hello (a,"
+                       "           b,"
+                       "           c,"
+                       "           d) :")))
+
+;; arg-list-2 : ListOfVariable PosInt -> ListOfString
+;; GIVEN: A listofvariable representing the args not yet added to the listofstring
+;;        and a posint representing the amount that they should be indented
+;; RETURNS: A listofstring representing the proper formatting for the args
+;; HALTING CONDITION: final arg of lov is reached
+(define (arg-list-2 lov indent)
+  (cond
+    [(empty? lov) empty]
+    [(empty? (rest lov))(cons (string-append (make-indent-spaces-func indent)
+                                             (symbol->string (first lov))
+                                             ") :")
+                              (arg-list-2 (rest lov) indent))]
+    [else (cons (string-append (make-indent-spaces-func indent) (symbol->string (first lov)) ",")
+                (arg-list-2 (rest lov) indent))]  
+    )
+  )
+;________Tests
+(begin-for-test(check-equal?(arg-list-2(list 'a 'b 'c 'd) 5)
+                            (list "      a,"
+                                  "      b,"
+                                  "      c,"
+                                  "      d) :")))
+;__________________________________________________________________________________
+;; make-indent-spaces-func : PosInt -> String
+;; GIVEN: A PosInt representing the desired number of spaces for an indent 
+;; WHERE: indent is at least 1
+;; RETURNS: A string representing the desired indent
+;; HALTING CONDITION: indent reaches 1
+(define (make-indent-spaces-func indent)
+  (cond
+    [(equal? indent 0) " "]
+    [else (string-append " " (make-indent-spaces-func (- indent 1)))] 
+    )
+  )
+;________Tests
+(begin-for-test (check-equal? (func-possibility-2 sample-def-1 5)
+                              (list "def f1 (a,"
+                                    "        b,"
+                                    "        c,"
+                                    "        d) :")))
+
+;__________________________________________________________________________________
+;; generate-body : Definition PosInt -> String
+;; GIVEN: A Definition and a PosInt representing width
+;; RETURNS: A properly formatted representation of the definition's body as a string
+
+;(define (generate-body def width)
+
+;  )
+
+ 
